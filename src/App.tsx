@@ -1,11 +1,9 @@
-import Aside from "./components/layout/Aside";
+import MultiStep from "./components/multi-step/MultiStep";
 
 export default function App() {
   return (
     <div className="w-full min-h-screen relative">
-      <main className="w-full h-screen grid grid-cols-[20%_80%]">
-        <Aside />
-      </main>
+      <MultiStep />
     </div>
   );
 }

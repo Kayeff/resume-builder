@@ -4,10 +4,10 @@ import { Check } from "lucide-react";
 import { motion } from "motion/react";
 
 export default function Aside() {
-  const { step: currentStep, completedSteps, jumpToStep } = useStep();
+  const { step: currentStep, completedSteps, jumpToStep, max } = useStep();
 
   return (
-    <aside className="border-r border-foreground/20 p-5 flex flex-col gap-4">
+    <aside className="w-full border-r border-foreground/20 p-5 flex flex-col gap-4">
       <ul className="flex flex-col gap-2">
         {Object.entries(stepRecord).map((step) => (
           <li
@@ -26,13 +26,20 @@ export default function Aside() {
                     "bg-foreground text-background",
                 )}
               >
-                {completedSteps.has(+step[0]) ? <Check size={15} /> : step[0]}
+                {currentStep === +step[0] ? (
+                  step[0]
+                ) : completedSteps.has(+step[0]) ? (
+                  <Check size={15} />
+                ) : (
+                  step[0]
+                )}
+                {}
               </span>
               <span className="text-xl tracking-tight font-medium">
                 {step[1]}
               </span>
             </span>
-            {+step[0] !== 6 && (
+            {+step[0] !== max && (
               <motion.span
                 initial={{ height: 0 }}
                 animate={{ height: "24px" }}

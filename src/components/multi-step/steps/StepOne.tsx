@@ -1,7 +1,10 @@
-import { useFormContext } from "react-hook-form";
+import { useFormContext, useFormState } from "react-hook-form";
+import type { FormValues } from "../../../schema/schema";
+import ErrorLine from "../../common/ErrorLine";
 
 export default function StepOne() {
-  const { register } = useFormContext();
+  const { register, control } = useFormContext<FormValues>();
+  const { errors } = useFormState({ control });
 
   return (
     <div className="w-full grid grid-cols-2 gap-4">
@@ -11,9 +14,12 @@ export default function StepOne() {
         <input
           type="text"
           placeholder="Kaif Saiyed"
-          {...register("fullname", { required: "Full Name is required" })}
+          {...register("fullname")}
           className="border border-foreground/20 px-3 py-2 focus:outline-foreground focus:outline-1"
         />
+        {errors.fullname?.message && (
+          <ErrorLine error={errors.fullname?.message} />
+        )}
       </div>
 
       {/* Title */}
@@ -22,9 +28,10 @@ export default function StepOne() {
         <input
           type="text"
           placeholder="Front end developer"
-          {...register("title", { required: "Title is required" })}
+          {...register("title")}
           className="border border-foreground/20 px-3 py-2 focus:outline-foreground focus:outline-1"
         />
+        {errors.title?.message && <ErrorLine error={errors.title?.message} />}
       </div>
 
       {/* City */}
@@ -36,6 +43,7 @@ export default function StepOne() {
           {...register("city")}
           className="border border-foreground/20 px-3 py-2 focus:outline-foreground focus:outline-1"
         />
+        {errors.city?.message && <ErrorLine error={errors.city?.message} />}
       </div>
 
       {/* Country, Phone */}
@@ -48,16 +56,21 @@ export default function StepOne() {
             {...register("country")}
             className="border border-foreground/20 px-3 py-2 focus:outline-foreground focus:outline-1"
           />
+          {errors.country?.message && (
+            <ErrorLine error={errors.country?.message} />
+          )}
         </div>
         <div className="flex flex-col gap-2">
-          <label htmlFor="country">Phone</label>
+          <label htmlFor="phone">Phone</label>
           <input
             type="tel"
-            placeholder="+91 4567891011"
+            placeholder="4567891011"
+            pattern="[0-9]{10}"
             maxLength={10}
             {...register("phone")}
             className="border border-foreground/20 px-3 py-2 focus:outline-foreground focus:outline-1"
           />
+          {errors.phone?.message && <ErrorLine error={errors.phone?.message} />}
         </div>
       </div>
 
@@ -68,9 +81,10 @@ export default function StepOne() {
           <input
             type="email"
             placeholder="someone@example.com"
-            {...register("email", { required: "Email is required" })}
+            {...register("email")}
             className="border border-foreground/20 px-3 py-2 focus:outline-foreground focus:outline-1"
           />
+          {errors.email?.message && <ErrorLine error={errors.email?.message} />}
         </div>
         <div className="flex flex-col gap-2">
           <label htmlFor="linkedin">Linkedin</label>
@@ -80,6 +94,9 @@ export default function StepOne() {
             {...register("linkedin")}
             className="border border-foreground/20 px-3 py-2 focus:outline-foreground focus:outline-1"
           />
+          {errors.linkedin?.message && (
+            <ErrorLine error={errors.linkedin?.message} />
+          )}
         </div>
         <div className="flex flex-col gap-2">
           <label htmlFor="email">Website</label>
@@ -89,6 +106,9 @@ export default function StepOne() {
             {...register("website")}
             className="border border-foreground/20 px-3 py-2 focus:outline-foreground focus:outline-1"
           />
+          {errors.website?.message && (
+            <ErrorLine error={errors.website?.message} />
+          )}
         </div>
       </div>
     </div>
